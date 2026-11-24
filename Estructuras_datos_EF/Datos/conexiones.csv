@@ -1,0 +1,9 @@
+﻿origen,destino,km,minutos
+Bodega Chabelita,Makro,4.1,10
+Bodega Chabelita,Puesto de Refrescos,1.1,5
+Bodega Chabelita,Puesto de Abarrotes,1.6,7
+Makro,Puesto de Refrescos,3,5
+Puesto de Refrescos,Puesto de Dulces,0.2,0.8
+Puesto de Dulces,Puesto de Abarrotes,0.3,1.2
+Puesto de Abarrotes,Puesto de Útiles Escolares,0.2,0.24
+Makro,Puesto de Útiles Escolares,2.3,2.7

@@ -1,4 +1,4 @@
-PROTOTIPO EP - ESTRUCTURAS DE DATOS (CIIN1190P)
+PROTOTIPO EF - ESTRUCTURAS DE DATOS (CIIN1190P)
 Bodega "Chabelita", Trujillo - observación del 12/10/2026, 6:00 a 7:30 p. m.
 
 Grupo 9
@@ -11,9 +11,10 @@ Integrantes:
 
 
 1. QUE HACE
-	Simula el flujo de pagos de una bodega con Yape: las operaciones llegan a una
-	cola, se atienden en orden, se registran, se reintentan si no hay señal y el
-	ultimo abono se puede revertir.
+	Simula el flujo de pagos de una bodega con Yape (cola, registro, reintentos y
+	reversa del último abono), indexa las operaciones en un árbol binario de
+	búsqueda y modela a los distribuidores como un grafo: rutas más cortas, árbol
+	de expansión mínima, compras fiadas, pago de deudas y plan de visita óptimo.
 
 
 2. REQUISITOS
@@ -24,68 +25,83 @@ Integrantes:
 
 3. COMO EJECUTAR
 	1. Descomprimir el ZIP.
-	2. Abrir Estructuras_datos_EP.slnx con Visual Studio.
-	3. Verificar que el proyecto de inicio sea Estructuras_datos_EP y presionar F5.
+	2. Abrir Estructuras_datos_EF.slnx con Visual Studio.
+	3. Verificar que el proyecto de inicio sea Estructuras_datos_EF y presionar F5.
+	Los archivos distribuidores.csv y conexiones.csv (carpeta Datos) se copian solos
+	junto al ejecutable y el grafo se carga al abrir la ventana.
 
 
 4. ESTRUCTURAS (carpeta Estructuras)
 	Registro de operaciones     ->  Lista simple    ->  ListaSimple.cs
 	Navegación del historial    ->  Lista doble     ->  ListaDoble.cs
 	Gestión de reintentos       ->  Lista circular  ->  ListaCircular.cs
-	Reversión del ultimo abono  ->  Pila            ->  Pila.cs
+	Reversión del último abono  ->  Pila            ->  Pila.cs
 	Orden de arribo             ->  Cola            ->  Cola.cs
+	Búsqueda por código         ->  Árbol binario de búsqueda  ->  ArbolBinarioBusqueda.cs
+	Red de distribuidores       ->  Grafo (matriz y lista de adyacencia, Floyd-Warshall,
+	                                Prim, plan de visita)       ->  Grafo.cs
 
-	Operaciones de la cola: Enqueue (encolar), Dequeue (desencolar) y
-	Peek (consultar el frente sin sacarlo).
-
-	Clase común: Operación (carpeta Modelos): código, fecha y hora, tipo, monto,
-	origen, destino, estado e intentos.
 	Todas las estructuras están hechas con nodos propios (sin usar las clases
-	List, Queue ni Stack de .NET).
+	List, Queue ni Stack de .NET en las estructuras).
 
 
 5. COMO USAR LA VENTANA
-	Cargar datos de campo: pone en la cola las 12 operaciones observadas.
-	Atender (desencolar): procesa la primera de la cola.
-	Atender SIN señal (casilla): manda la operación a reintentos.
-	Ejecutar reintentos: recorre la lista circular (se detiene a los 3 intentos).
-	Revertir ultimo abono: usa la pila.
-	Buscar operación: busca por código (ejemplo: OP-001).
-	Pestana "Lista doble": botones Inicio, Anterior, Siguiente y Final.
-	Ejecutar pruebas: corre los casos de prueba y guarda resultados_pruebas.txt
+	Panel izquierdo y pestañas Cola, Lista simple, Lista doble, Reintentos, Pila:
+	igual que en la EP (encolar, atender, atender SIN señal, reintentos, revertir,
+	buscar, anular, limpiar cola y pila).
+	Pestaña "Árbol": dibujo del árbol, recorridos inorden/preorden/postorden y
+	comparación de búsqueda lista simple vs árbol.
+	Pestaña "Grafo": dibujo del grafo con las distancias en km; "Ruta más corta"
+	(origen y destino, Floyd-Warshall, se resalta en rojo); "Floyd-Warshall" (matriz
+	de distancias mínimas); "Prim" (árbol mínimo, en verde); "Matriz y lista".
+	Pestaña "Deudas": "Comprar fiado" (todos menos Makro), "Pagar deuda" (crea una
+	transferencia que entra a la COLA; al atenderla pasa por reintentos y pila; si se
+	revierte, la deuda vuelve a subir), "Plan de visita óptimo" (marcar los
+	distribuidores a visitar), "Cargar 40 simulados", "Atender toda la cola" y
+	"Probar volumen de 10 000".
+	Ejecutar pruebas: corre los casos y guarda resultados_pruebas.txt
 	(junto al ejecutable, en bin\Debug\net8.0-windows).
-	Reiniciar: vacía las 5 estructuras.
 
 
-6. VALIDACIONES
-	Código: formato OP-001, no vacío y único.
+6. FORMATO DE LOS CSV (carpeta Datos)
+	distribuidores.csv   ->  una columna "nombre"
+	conexiones.csv       ->  columnas "origen", "destino", "km" y, opcional, "minutos"
+	El peso del grafo es la distancia en km (es lo único completo en las 8 conexiones;
+	el tiempo solo está en 3). Se aceptan separador ; o , y decimales con coma o punto.
+
+
+7. VALIDACIONES
+	Código: formato OP-001 (3 a 6 dígitos), no vacío y único.
 	Fecha y hora: no puede ser futura.
 	Monto: mayor que 0 y hasta S/ 500.
 	Origen y destino: no vacíos y distintos.
 	Intentos: de 0 a 3.
+	Compra fiada: monto mayor que 0; Makro no vende fiado.
+	Pago de deuda: no puede superar el saldo pendiente.
+	CSV: columnas obligatorias, distribuidores sin repetir, conexiones solo entre
+	distribuidores existentes, km mayor que 0, sin conexiones repetidas.
 
 
-7. DATOS DE PRUEBA
-	12 operaciones reales de la bodega (18:03 a 19:24), todas procesadas al
-	primer intento. Total S/ 78.60. Están en el archivo bitacora.xlsx (en la
-	misma carpeta que este README) y en el código, en
-	Estructuras_datos_EP/Datos/DatosCampo.cs.
-	En campo no hubo fallas ni reversas: esas pruebas se hacen ingresando
- 	casos manualmente.
+8. DATOS DE PRUEBA
+	- 12 operaciones reales de la bodega (Datos/DatosCampo.cs).
+	- 40 operaciones simuladas (botón "Cargar 40 simulados": semilla fija, siempre las mismas).
+	- 10 000 operaciones para el volumen (botón "Probar volumen de 10 000").
+	- Grafo de ejemplo de 5 puntos, calculado a mano, para las pruebas del grafo.
 
 
-8. CASOS DE PRUEBA (botón "Ejecutar pruebas")
-	1. Estructura vacía
-	2. Registro de una operación
-	3. Registro de varias operaciones
-	4. Navegación hacia adelante y atrás
-	5. Recorrido circular con condición de parada
-	6. Reversa del ultimo abono
-	7. Búsqueda de una operación inexistente
-	8. Control de datos inválidos
-	9. Cola: encolar, atender y consultar el frente
+9. CASOS DE PRUEBA (botón "Ejecutar pruebas": 28 casos)
+	1 a 9 y Extra: estructuras de la EP.
+	10 a 18: árbol, anulación y eliminación en listas.
+	19. Grafo: matriz y lista de adyacencia
+	20. Floyd-Warshall: distancias y rutas
+	21. Prim: árbol de expansión mínima
+	22. Plan de visita óptimo
+	23. Carga desde CSV
+	24. Compras fiadas (todos menos Makro)
+	25. Pago de deuda por cola, reintentos y pila
+	26. 40 operaciones simuladas
+	27. Volumen de 10 000 operaciones (lista simple vs árbol)
 
 
-9. ALCANCE
-	Esta entrega es la EP: listas simple, doble y circular, pila y cola.
-	El árbol de búsqueda binaria y el grafo quedan para la Evaluación Final.
+10. ALCANCE
+	Evaluación Final: incluye listas, pila, cola, árbol binario de búsqueda y grafo.

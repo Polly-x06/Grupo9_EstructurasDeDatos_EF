@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Estructuras_datos_EP.Pruebas;
 
-public class EjecutorPruebas
+public partial class EjecutorPruebas
 {
     private readonly StringBuilder reporte = new();
     public int Ok { get; private set; }
@@ -360,6 +360,9 @@ public class EjecutorPruebas
             Afirmar(lista.EstaVacia && lista.Cantidad == 0, "queda vacía");
             Afirmar(!lista.Eliminar(operacion => true), "eliminar en una lista vacía devuelve false");
         });
+
+        CasosGrafo();
+        CasosDeudas();
 
         Escribir(new string('-', 70));
         Escribir($"Resultado: {Ok} OK, {Falla} con falla.");

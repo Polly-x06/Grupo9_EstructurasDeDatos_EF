@@ -12,8 +12,7 @@ public static class Validador
     public const decimal MontoMaximo = 500m;
     public const int MaxIntentos = 3;
 
-    private static readonly Regex FormatoCodigo = new(@"^OP-\d{3,4}$");
-
+    private static readonly Regex FormatoCodigo = new(@"^OP-\d{3,6}$");
     public static List<string> Validar(Operacion operacion, DateTime ahora)
     {
         List<string> errores = new List<string>();

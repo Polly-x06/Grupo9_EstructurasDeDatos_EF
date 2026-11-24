@@ -4,5 +4,11 @@
     <Compile Update="FrmOperacionesBodega.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="Interfaz\PestanaDeudas.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="Interfaz\PestanaGrafo.cs">
+      <SubType>Component</SubType>
+    </Compile>
   </ItemGroup>
 </Project>

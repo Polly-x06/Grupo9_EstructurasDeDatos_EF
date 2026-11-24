@@ -1,4 +1,5 @@
-﻿using Estructuras_datos_EP.Datos;
+﻿using Estructuras_datos_EP.Interfaz;
+using Estructuras_datos_EP.Datos;
 using Estructuras_datos_EP.Estructuras;
 using Estructuras_datos_EP.Modelos;
 using Estructuras_datos_EP.Pruebas;
@@ -22,12 +23,14 @@ public partial class FrmOperacionesBodega : Form
 
     private GestorTransacciones gestor = new();
     private string? codigo_resaltado;
+    private PestanaDeudas? pestana_deudas;
 
     public FrmOperacionesBodega()
     {
         InitializeComponent();
         ConfigurarControles();
         ConectarEventos();
+        AgregarPestanasEF();
         CargarCodigoSugerido();
         Refrescar();
         Mensaje("Listo. Cargue los datos de campo o registre una operación nueva.");
@@ -351,6 +354,7 @@ public partial class FrmOperacionesBodega : Form
     private void Reiniciar()
     {
         gestor = new GestorTransacciones();
+        pestana_deudas?.Reiniciar();
         codigo_resaltado = null;
         txtRecorrido.Clear();
         CargarCodigoSugerido();
@@ -359,9 +363,21 @@ public partial class FrmOperacionesBodega : Form
 
     #endregion
 
+    // Agrega las pestañas "Grafo" y "Deudas" 
+    private void AgregarPestanasEF()
+    {
+        PestanaGrafo grafo_tab = new PestanaGrafo(Mensaje);
+        PestanaDeudas deudas_tab = new PestanaDeudas(() => gestor, () => grafo_tab.GrafoActual, grafo_tab.Resaltar, Refrescar, Mensaje);
+        grafo_tab.GrafoCambiado += deudas_tab.Actualizar;
+        pestana_deudas = deudas_tab;
+        TabPage.TabPages.Add(grafo_tab);
+        TabPage.TabPages.Add(deudas_tab);
+        grafo_tab.CargarPorDefecto();
+    }
+
     #region Presentación
 
-    // El código sugerido es siempre el siguiente al mayor número en uso (en el registro o en la cola).
+    // El código sugerido es siempre el siguiente al mayor número en uso 
     private void CargarCodigoSugerido()
     {
         int mayor_numero = gestor.Registro.Concat(gestor.Llegadas).Select(operacion => operacion.Numero).DefaultIfEmpty(0).Max();
@@ -387,6 +403,7 @@ public partial class FrmOperacionesBodega : Form
         lblResumen.Text = $"Cola: {gestor.Llegadas.Cantidad}  |  Registro: {gestor.Registro.Cantidad}  |  " +
                           $"Historial: {gestor.Historial.Cantidad}  |  Reintentos: {gestor.Reintentos.Cantidad}  |  " +
                           $"Pila (abonos): {gestor.Abonos.Cantidad}";
+        pestana_deudas?.Actualizar();
         RefrescarArbol();
     }
 
