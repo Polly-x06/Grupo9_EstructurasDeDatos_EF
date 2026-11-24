@@ -47,5 +47,18 @@ public class ListaDoble<T> : IEnumerable<T> where T : class
     {
         for (NodoDoble<T>? nodo = cabeza; nodo != null; nodo = nodo.Siguiente) yield return nodo.Dato;
     }
+    public bool Eliminar(Predicate<T> criterio)
+    {
+        for (NodoDoble<T>? nodo = cabeza; nodo != null; nodo = nodo.Siguiente)
+        {
+            if (!criterio(nodo.Dato)) continue;
+            if (nodo.Anterior == null) cabeza = nodo.Siguiente; else nodo.Anterior.Siguiente = nodo.Siguiente;
+            if (nodo.Siguiente == null) cola = nodo.Anterior; else nodo.Siguiente.Anterior = nodo.Anterior;
+            if (ReferenceEquals(actual, nodo)) actual = nodo.Siguiente ?? nodo.Anterior;
+            Cantidad--;
+            return true;
+        }
+        return false;
+    }
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 }

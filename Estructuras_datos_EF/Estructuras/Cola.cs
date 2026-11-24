@@ -46,5 +46,11 @@ public class Cola<T> : IEnumerable<T> where T : class
     {
         for (NodoSimple<T>? nodo = frente; nodo != null; nodo = nodo.Siguiente) yield return nodo.Dato;
     }
+    public void Limpiar()
+    {
+        frente = null;
+        final = null;
+        Cantidad = 0;
+    }
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 }

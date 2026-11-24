@@ -32,10 +32,16 @@ public class ListaSimple<T> : IEnumerable<T> where T : class
         Cantidad++;
     }
 
+    public int NodosVisitados { get; private set; }
+
     public T? Buscar(Predicate<T> criterio)
     {
+        NodosVisitados = 0;
         for (NodoSimple<T>? nodo = cabeza; nodo != null; nodo = nodo.Siguiente)
+        {
+            NodosVisitados++;
             if (criterio(nodo.Dato)) return nodo.Dato;
+        }
         return null;
     }
 

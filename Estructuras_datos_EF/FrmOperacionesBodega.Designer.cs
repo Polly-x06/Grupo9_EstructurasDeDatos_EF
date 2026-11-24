@@ -42,16 +42,19 @@
             label2 = new Label();
             label1 = new Label();
             groupBox2 = new GroupBox();
+            btnLimpiarCola = new Button();
             chkSinSenal = new CheckBox();
             btnAtender = new Button();
             btnVerFrente = new Button();
             btnEncolar = new Button();
             groupBox3 = new GroupBox();
+            btnLimpiarPila = new Button();
             btnRevertir = new Button();
             btnReintentar = new Button();
             numSenalIntento = new NumericUpDown();
             label7 = new Label();
             groupBox4 = new GroupBox();
+            btnAnular = new Button();
             btnBuscar = new Button();
             txtBuscar = new TextBox();
             groupBox5 = new GroupBox();
@@ -75,9 +78,18 @@
             btnInicio = new Button();
             tabPage2 = new TabPage();
             lvRegistro = new ListView();
-            tabControl1 = new TabControl();
+            TabPage = new TabControl();
             tabPage1 = new TabPage();
             lvCola = new ListView();
+            tabArbol = new TabPage();
+            txtRecorrido = new TextBox();
+            pnlArbol = new Panel();
+            panelArbolBarra = new Panel();
+            lblArbolInfo = new Label();
+            btnComparar = new Button();
+            btnPostOrden = new Button();
+            btnPreOrden = new Button();
+            btnInOrden = new Button();
             groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)numMonto).BeginInit();
             groupBox2.SuspendLayout();
@@ -91,8 +103,10 @@
             tabPage3.SuspendLayout();
             panel1.SuspendLayout();
             tabPage2.SuspendLayout();
-            tabControl1.SuspendLayout();
+            TabPage.SuspendLayout();
             tabPage1.SuspendLayout();
+            tabArbol.SuspendLayout();
+            panelArbolBarra.SuspendLayout();
             SuspendLayout();
             // 
             // groupBox1
@@ -216,6 +230,7 @@
             // 
             // groupBox2
             // 
+            groupBox2.Controls.Add(btnLimpiarCola);
             groupBox2.Controls.Add(chkSinSenal);
             groupBox2.Controls.Add(btnAtender);
             groupBox2.Controls.Add(btnVerFrente);
@@ -223,15 +238,25 @@
             groupBox2.ForeColor = SystemColors.ButtonFace;
             groupBox2.Location = new Point(12, 268);
             groupBox2.Name = "groupBox2";
-            groupBox2.Size = new Size(339, 170);
+            groupBox2.Size = new Size(339, 166);
             groupBox2.TabIndex = 15;
             groupBox2.TabStop = false;
             groupBox2.Text = "Cola (orden de arribo)";
             // 
+            // btnLimpiarCola
+            // 
+            btnLimpiarCola.ForeColor = SystemColors.ActiveCaptionText;
+            btnLimpiarCola.Location = new Point(170, 63);
+            btnLimpiarCola.Name = "btnLimpiarCola";
+            btnLimpiarCola.Size = new Size(150, 23);
+            btnLimpiarCola.TabIndex = 4;
+            btnLimpiarCola.Text = "Limpiar cola";
+            btnLimpiarCola.UseVisualStyleBackColor = true;
+            // 
             // chkSinSenal
             // 
             chkSinSenal.AutoSize = true;
-            chkSinSenal.Location = new Point(22, 146);
+            chkSinSenal.Location = new Point(22, 136);
             chkSinSenal.Name = "chkSinSenal";
             chkSinSenal.Size = new Size(119, 19);
             chkSinSenal.TabIndex = 3;
@@ -241,7 +266,7 @@
             // btnAtender
             // 
             btnAtender.ForeColor = SystemColors.ActiveCaptionText;
-            btnAtender.Location = new Point(21, 112);
+            btnAtender.Location = new Point(20, 95);
             btnAtender.Name = "btnAtender";
             btnAtender.Size = new Size(300, 23);
             btnAtender.TabIndex = 2;
@@ -251,9 +276,9 @@
             // btnVerFrente
             // 
             btnVerFrente.ForeColor = SystemColors.ActiveCaptionText;
-            btnVerFrente.Location = new Point(20, 71);
+            btnVerFrente.Location = new Point(20, 63);
             btnVerFrente.Name = "btnVerFrente";
-            btnVerFrente.Size = new Size(300, 23);
+            btnVerFrente.Size = new Size(148, 23);
             btnVerFrente.TabIndex = 1;
             btnVerFrente.Text = "Ver frente";
             btnVerFrente.UseVisualStyleBackColor = true;
@@ -270,24 +295,35 @@
             // 
             // groupBox3
             // 
+            groupBox3.Controls.Add(btnLimpiarPila);
             groupBox3.Controls.Add(btnRevertir);
             groupBox3.Controls.Add(btnReintentar);
             groupBox3.Controls.Add(numSenalIntento);
             groupBox3.Controls.Add(label7);
             groupBox3.ForeColor = SystemColors.ButtonFace;
-            groupBox3.Location = new Point(12, 444);
+            groupBox3.Location = new Point(12, 440);
             groupBox3.Name = "groupBox3";
-            groupBox3.Size = new Size(339, 137);
+            groupBox3.Size = new Size(339, 132);
             groupBox3.TabIndex = 16;
             groupBox3.TabStop = false;
             groupBox3.Text = "Reintentos y reversa";
             // 
+            // btnLimpiarPila
+            // 
+            btnLimpiarPila.ForeColor = SystemColors.ActiveCaptionText;
+            btnLimpiarPila.Location = new Point(174, 99);
+            btnLimpiarPila.Name = "btnLimpiarPila";
+            btnLimpiarPila.Size = new Size(146, 23);
+            btnLimpiarPila.TabIndex = 4;
+            btnLimpiarPila.Text = "Limpiar pila";
+            btnLimpiarPila.UseVisualStyleBackColor = true;
+            // 
             // btnRevertir
             // 
             btnRevertir.ForeColor = SystemColors.ActiveCaptionText;
-            btnRevertir.Location = new Point(20, 99);
+            btnRevertir.Location = new Point(24, 99);
             btnRevertir.Name = "btnRevertir";
-            btnRevertir.Size = new Size(298, 23);
+            btnRevertir.Size = new Size(144, 23);
             btnRevertir.TabIndex = 3;
             btnRevertir.Text = "Revertir último abono";
             btnRevertir.UseVisualStyleBackColor = true;
@@ -297,7 +333,7 @@
             btnReintentar.ForeColor = SystemColors.ActiveCaptionText;
             btnReintentar.Location = new Point(20, 65);
             btnReintentar.Name = "btnReintentar";
-            btnReintentar.Size = new Size(298, 23);
+            btnReintentar.Size = new Size(300, 23);
             btnReintentar.TabIndex = 2;
             btnReintentar.Text = "Ejecutar reintentos";
             btnReintentar.UseVisualStyleBackColor = true;
@@ -320,22 +356,33 @@
             // 
             // groupBox4
             // 
+            groupBox4.Controls.Add(btnAnular);
             groupBox4.Controls.Add(btnBuscar);
             groupBox4.Controls.Add(txtBuscar);
             groupBox4.ForeColor = SystemColors.ButtonFace;
-            groupBox4.Location = new Point(12, 587);
+            groupBox4.Location = new Point(12, 578);
             groupBox4.Name = "groupBox4";
             groupBox4.Size = new Size(339, 92);
             groupBox4.TabIndex = 17;
             groupBox4.TabStop = false;
             groupBox4.Text = "Consulta";
             // 
+            // btnAnular
+            // 
+            btnAnular.ForeColor = SystemColors.ActiveCaptionText;
+            btnAnular.Location = new Point(174, 57);
+            btnAnular.Name = "btnAnular";
+            btnAnular.Size = new Size(148, 23);
+            btnAnular.TabIndex = 6;
+            btnAnular.Text = "Anular";
+            btnAnular.UseVisualStyleBackColor = true;
+            // 
             // btnBuscar
             // 
             btnBuscar.ForeColor = SystemColors.ActiveCaptionText;
             btnBuscar.Location = new Point(20, 57);
             btnBuscar.Name = "btnBuscar";
-            btnBuscar.Size = new Size(298, 23);
+            btnBuscar.Size = new Size(148, 23);
             btnBuscar.TabIndex = 5;
             btnBuscar.Text = "Buscar operación";
             btnBuscar.UseVisualStyleBackColor = true;
@@ -353,7 +400,7 @@
             groupBox5.Controls.Add(btnPruebas);
             groupBox5.Controls.Add(btnCargarCampo);
             groupBox5.ForeColor = SystemColors.ButtonFace;
-            groupBox5.Location = new Point(12, 685);
+            groupBox5.Location = new Point(12, 683);
             groupBox5.Name = "groupBox5";
             groupBox5.Size = new Size(339, 132);
             groupBox5.TabIndex = 18;
@@ -393,9 +440,9 @@
             // groupBox7
             // 
             groupBox7.Controls.Add(lblResumen);
-            groupBox7.Location = new Point(357, 587);
+            groupBox7.Location = new Point(370, 585);
             groupBox7.Name = "groupBox7";
-            groupBox7.Size = new Size(854, 92);
+            groupBox7.Size = new Size(827, 92);
             groupBox7.TabIndex = 20;
             groupBox7.TabStop = false;
             // 
@@ -415,9 +462,9 @@
             lstMensajes.ForeColor = SystemColors.Menu;
             lstMensajes.FormattingEnabled = true;
             lstMensajes.ItemHeight = 15;
-            lstMensajes.Location = new Point(358, 693);
+            lstMensajes.Location = new Point(370, 691);
             lstMensajes.Name = "lstMensajes";
-            lstMensajes.Size = new Size(853, 124);
+            lstMensajes.Size = new Size(827, 124);
             lstMensajes.TabIndex = 21;
             // 
             // tabPage5
@@ -425,7 +472,7 @@
             tabPage5.Controls.Add(lvPila);
             tabPage5.Location = new Point(4, 24);
             tabPage5.Name = "tabPage5";
-            tabPage5.Size = new Size(845, 530);
+            tabPage5.Size = new Size(817, 530);
             tabPage5.TabIndex = 4;
             tabPage5.Text = "Pila";
             tabPage5.UseVisualStyleBackColor = true;
@@ -435,7 +482,7 @@
             lvPila.Dock = DockStyle.Fill;
             lvPila.Location = new Point(0, 0);
             lvPila.Name = "lvPila";
-            lvPila.Size = new Size(845, 530);
+            lvPila.Size = new Size(817, 530);
             lvPila.TabIndex = 0;
             lvPila.UseCompatibleStateImageBehavior = false;
             // 
@@ -444,7 +491,7 @@
             tabPage4.Controls.Add(lvReintentos);
             tabPage4.Location = new Point(4, 24);
             tabPage4.Name = "tabPage4";
-            tabPage4.Size = new Size(845, 530);
+            tabPage4.Size = new Size(817, 530);
             tabPage4.TabIndex = 3;
             tabPage4.Text = "Lista circular";
             tabPage4.UseVisualStyleBackColor = true;
@@ -454,7 +501,7 @@
             lvReintentos.Dock = DockStyle.Fill;
             lvReintentos.Location = new Point(0, 0);
             lvReintentos.Name = "lvReintentos";
-            lvReintentos.Size = new Size(845, 530);
+            lvReintentos.Size = new Size(817, 530);
             lvReintentos.TabIndex = 0;
             lvReintentos.UseCompatibleStateImageBehavior = false;
             // 
@@ -464,7 +511,7 @@
             tabPage3.Controls.Add(panel1);
             tabPage3.Location = new Point(4, 24);
             tabPage3.Name = "tabPage3";
-            tabPage3.Size = new Size(845, 530);
+            tabPage3.Size = new Size(817, 530);
             tabPage3.TabIndex = 2;
             tabPage3.Text = "Lista doble";
             tabPage3.UseVisualStyleBackColor = true;
@@ -474,7 +521,7 @@
             lvHistorial.Dock = DockStyle.Fill;
             lvHistorial.Location = new Point(0, 87);
             lvHistorial.Name = "lvHistorial";
-            lvHistorial.Size = new Size(845, 443);
+            lvHistorial.Size = new Size(817, 443);
             lvHistorial.TabIndex = 1;
             lvHistorial.UseCompatibleStateImageBehavior = false;
             // 
@@ -488,7 +535,7 @@
             panel1.Dock = DockStyle.Top;
             panel1.Location = new Point(0, 0);
             panel1.Name = "panel1";
-            panel1.Size = new Size(845, 87);
+            panel1.Size = new Size(817, 87);
             panel1.TabIndex = 0;
             // 
             // lblActual
@@ -543,7 +590,7 @@
             tabPage2.Location = new Point(4, 24);
             tabPage2.Name = "tabPage2";
             tabPage2.Padding = new Padding(3);
-            tabPage2.Size = new Size(845, 530);
+            tabPage2.Size = new Size(817, 530);
             tabPage2.TabIndex = 1;
             tabPage2.Text = "Lista simple";
             tabPage2.UseVisualStyleBackColor = true;
@@ -553,29 +600,30 @@
             lvRegistro.Dock = DockStyle.Fill;
             lvRegistro.Location = new Point(3, 3);
             lvRegistro.Name = "lvRegistro";
-            lvRegistro.Size = new Size(839, 524);
+            lvRegistro.Size = new Size(811, 524);
             lvRegistro.TabIndex = 0;
             lvRegistro.UseCompatibleStateImageBehavior = false;
             // 
-            // tabControl1
+            // TabPage
             // 
-            tabControl1.Controls.Add(tabPage1);
-            tabControl1.Controls.Add(tabPage2);
-            tabControl1.Controls.Add(tabPage3);
-            tabControl1.Controls.Add(tabPage4);
-            tabControl1.Controls.Add(tabPage5);
-            tabControl1.Location = new Point(356, 23);
-            tabControl1.Name = "tabControl1";
-            tabControl1.SelectedIndex = 0;
-            tabControl1.Size = new Size(853, 558);
-            tabControl1.TabIndex = 22;
+            TabPage.Controls.Add(tabPage1);
+            TabPage.Controls.Add(tabPage2);
+            TabPage.Controls.Add(tabPage3);
+            TabPage.Controls.Add(tabPage4);
+            TabPage.Controls.Add(tabPage5);
+            TabPage.Controls.Add(tabArbol);
+            TabPage.Location = new Point(370, 21);
+            TabPage.Name = "TabPage";
+            TabPage.SelectedIndex = 0;
+            TabPage.Size = new Size(825, 558);
+            TabPage.TabIndex = 22;
             // 
             // tabPage1
             // 
             tabPage1.Controls.Add(lvCola);
             tabPage1.Location = new Point(4, 24);
             tabPage1.Name = "tabPage1";
-            tabPage1.Size = new Size(845, 530);
+            tabPage1.Size = new Size(817, 530);
             tabPage1.TabIndex = 5;
             tabPage1.Text = "Cola";
             tabPage1.UseVisualStyleBackColor = true;
@@ -585,17 +633,103 @@
             lvCola.Dock = DockStyle.Fill;
             lvCola.Location = new Point(0, 0);
             lvCola.Name = "lvCola";
-            lvCola.Size = new Size(845, 530);
+            lvCola.Size = new Size(817, 530);
             lvCola.TabIndex = 0;
             lvCola.UseCompatibleStateImageBehavior = false;
+            // 
+            // tabArbol
+            // 
+            tabArbol.Controls.Add(txtRecorrido);
+            tabArbol.Controls.Add(pnlArbol);
+            tabArbol.Controls.Add(panelArbolBarra);
+            tabArbol.Location = new Point(4, 24);
+            tabArbol.Name = "tabArbol";
+            tabArbol.Padding = new Padding(3);
+            tabArbol.Size = new Size(817, 530);
+            tabArbol.TabIndex = 6;
+            tabArbol.Text = "Árbol";
+            tabArbol.UseVisualStyleBackColor = true;
+            // 
+            // txtRecorrido
+            // 
+            txtRecorrido.Dock = DockStyle.Bottom;
+            txtRecorrido.Location = new Point(3, 467);
+            txtRecorrido.Multiline = true;
+            txtRecorrido.Name = "txtRecorrido";
+            txtRecorrido.Size = new Size(811, 60);
+            txtRecorrido.TabIndex = 2;
+            // 
+            // pnlArbol
+            // 
+            pnlArbol.Location = new Point(6, 112);
+            pnlArbol.Name = "pnlArbol";
+            pnlArbol.Size = new Size(805, 334);
+            pnlArbol.TabIndex = 1;
+            // 
+            // panelArbolBarra
+            // 
+            panelArbolBarra.Controls.Add(lblArbolInfo);
+            panelArbolBarra.Controls.Add(btnComparar);
+            panelArbolBarra.Controls.Add(btnPostOrden);
+            panelArbolBarra.Controls.Add(btnPreOrden);
+            panelArbolBarra.Controls.Add(btnInOrden);
+            panelArbolBarra.Location = new Point(0, 0);
+            panelArbolBarra.Name = "panelArbolBarra";
+            panelArbolBarra.Size = new Size(817, 106);
+            panelArbolBarra.TabIndex = 0;
+            // 
+            // lblArbolInfo
+            // 
+            lblArbolInfo.AutoSize = true;
+            lblArbolInfo.Location = new Point(6, 66);
+            lblArbolInfo.Name = "lblArbolInfo";
+            lblArbolInfo.Size = new Size(70, 15);
+            lblArbolInfo.TabIndex = 4;
+            lblArbolInfo.Text = "lblArbolInfo";
+            // 
+            // btnComparar
+            // 
+            btnComparar.Location = new Point(301, 3);
+            btnComparar.Name = "btnComparar";
+            btnComparar.Size = new Size(88, 42);
+            btnComparar.TabIndex = 3;
+            btnComparar.Text = "Comparar lista vs árbol";
+            btnComparar.UseVisualStyleBackColor = true;
+            // 
+            // btnPostOrden
+            // 
+            btnPostOrden.Location = new Point(202, 6);
+            btnPostOrden.Name = "btnPostOrden";
+            btnPostOrden.Size = new Size(93, 39);
+            btnPostOrden.TabIndex = 2;
+            btnPostOrden.Text = "Recorrer postorden";
+            btnPostOrden.UseVisualStyleBackColor = true;
+            // 
+            // btnPreOrden
+            // 
+            btnPreOrden.Location = new Point(102, 6);
+            btnPreOrden.Name = "btnPreOrden";
+            btnPreOrden.Size = new Size(94, 39);
+            btnPreOrden.TabIndex = 1;
+            btnPreOrden.Text = "Recorrer preorden";
+            btnPreOrden.UseVisualStyleBackColor = true;
+            // 
+            // btnInOrden
+            // 
+            btnInOrden.Location = new Point(3, 6);
+            btnInOrden.Name = "btnInOrden";
+            btnInOrden.Size = new Size(93, 39);
+            btnInOrden.TabIndex = 0;
+            btnInOrden.Text = "Recorrer inorden";
+            btnInOrden.UseVisualStyleBackColor = true;
             // 
             // FrmOperacionesBodega
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(18, 18, 18);
-            ClientSize = new Size(1224, 840);
-            Controls.Add(tabControl1);
+            ClientSize = new Size(1219, 829);
+            Controls.Add(TabPage);
             Controls.Add(lstMensajes);
             Controls.Add(groupBox7);
             Controls.Add(groupBox5);
@@ -624,8 +758,12 @@
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             tabPage2.ResumeLayout(false);
-            tabControl1.ResumeLayout(false);
+            TabPage.ResumeLayout(false);
             tabPage1.ResumeLayout(false);
+            tabArbol.ResumeLayout(false);
+            tabArbol.PerformLayout();
+            panelArbolBarra.ResumeLayout(false);
+            panelArbolBarra.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -669,7 +807,7 @@
         private TabPage tabPage3;
         private TabPage tabPage2;
         private ListView lvRegistro;
-        private TabControl tabControl1;
+        private TabControl TabPage;
         private TabPage tabPage1;
         private ListView lvCola;
         private ListView lvPila;
@@ -681,5 +819,17 @@
         private Button btnInicio;
         private Label lblActual;
         private ListView lvHistorial;
+        private TabPage tabArbol;
+        private Button btnLimpiarCola;
+        private Button btnLimpiarPila;
+        private Button btnAnular;
+        private Panel panelArbolBarra;
+        private Button btnInOrden;
+        private Button btnComparar;
+        private Button btnPostOrden;
+        private Button btnPreOrden;
+        private Label lblArbolInfo;
+        private TextBox txtRecorrido;
+        private Panel pnlArbol;
     }
 }

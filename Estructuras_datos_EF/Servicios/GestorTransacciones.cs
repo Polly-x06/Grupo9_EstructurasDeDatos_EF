@@ -17,16 +17,20 @@ public class GestorTransacciones
     public ListaDoble<Operacion> Historial { get; } = new();
     public ListaCircular<Operacion> Reintentos { get; } = new();
     public Pila<Operacion> Abonos { get; } = new();
+    public ArbolBinarioBusqueda<Operacion> Indice { get; } = new(operacion => operacion.Numero);
 
     public GestorTransacciones(Func<DateTime>? reloj_externo = null)
     {
         reloj = reloj_externo ?? (() => DateTime.Now);
     }
 
-    public bool ExisteCodigo(string codigo) =>
-        Registro.Buscar(operacion => operacion.Codigo == codigo) != null
-        || Llegadas.Any(operacion => operacion.Codigo == codigo)
-        || Reintentos.Any(operacion => operacion.Codigo == codigo);
+    public bool ExisteCodigo(string codigo)
+    {
+        if (!Operacion.TryObtenerNumero(codigo, out int numero)) return false;
+        return Registro.Buscar(operacion => operacion.Numero == numero) != null
+            || Llegadas.Any(operacion => operacion.Numero == numero)
+            || Reintentos.Any(operacion => operacion.Numero == numero);
+    }
 
     public List<string> Llegar(Operacion operacion)
     {
@@ -61,6 +65,7 @@ public class GestorTransacciones
         Operacion operacion = Llegadas.Dequeue();
         Registro.AgregarFinal(operacion);
         Historial.AgregarFinal(operacion);
+        Indice.Insertar(operacion);
         operacion.Intentos = 1;
         if (hay_senal) CompletarConExito(operacion);
         else
@@ -124,8 +129,46 @@ public class GestorTransacciones
 
     public Operacion? BuscarPorCodigo(string codigo)
     {
-        string codigo_normalizado = (codigo ?? "").Trim().ToUpperInvariant();
-        return Registro.Buscar(operacion => operacion.Codigo == codigo_normalizado)
-            ?? Llegadas.FirstOrDefault(operacion => operacion.Codigo == codigo_normalizado);
+        if (!Operacion.TryObtenerNumero(codigo, out int numero)) return null;
+        return Indice.Buscar(numero)
+            ?? Llegadas.FirstOrDefault(operacion => operacion.Numero == numero);
+    }
+
+    public (Operacion? Encontrada, int ComparacionesLista, int ComparacionesArbol) CompararBusqueda(string codigo)
+    {
+        if (!Operacion.TryObtenerNumero(codigo, out int numero)) return (null, 0, 0);
+        Operacion? en_lista = Registro.Buscar(operacion => operacion.Numero == numero);
+        int comparaciones_lista = Registro.NodosVisitados;
+        Operacion? en_arbol = Indice.Buscar(numero);
+        int comparaciones_arbol = Indice.Comparaciones;
+        return (en_arbol ?? en_lista, comparaciones_lista, comparaciones_arbol);
+    }
+
+    public int LimpiarCola()
+    {
+        int descartadas = Llegadas.Cantidad;
+        Llegadas.Limpiar();
+        return descartadas;
+    }
+
+    public int LimpiarPila()
+    {
+        int confirmados = Abonos.Cantidad;
+        Abonos.Limpiar();
+        return confirmados;
+    }
+
+    public Operacion AnularOperacion(string codigo)
+    {
+        Operacion? operacion = Operacion.TryObtenerNumero(codigo, out int numero) ? Indice.Buscar(numero) : null;
+        if (operacion == null)
+            throw new InvalidOperationException($"No existe una operación registrada con el código '{(codigo ?? "").Trim()}'.");
+        if (operacion.Estado != EstadoOperacion.Fallida && operacion.Estado != EstadoOperacion.Revertida)
+            throw new InvalidOperationException("Solo se pueden anular operaciones Fallidas o Revertidas. Para deshacer un abono procesado use «Revertir último abono».");
+
+        Registro.Eliminar(registrada => ReferenceEquals(registrada, operacion));
+        Historial.Eliminar(registrada => ReferenceEquals(registrada, operacion));
+        Indice.Eliminar(operacion.Numero);
+        return operacion;
     }
 }

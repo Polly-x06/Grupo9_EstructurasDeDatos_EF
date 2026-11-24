@@ -39,5 +39,10 @@ public class Pila<T> : IEnumerable<T> where T : class
     {
         for (NodoSimple<T>? nodo = cima; nodo != null; nodo = nodo.Siguiente) yield return nodo.Dato;
     }
+    public void Limpiar()
+    {
+        cima = null;
+        Cantidad = 0;
+    }
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 }

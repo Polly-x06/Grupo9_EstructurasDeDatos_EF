@@ -19,3 +19,12 @@ public class NodoDoble<T>
     public NodoDoble<T>? Anterior { get; set; }
     public NodoDoble(T dato) { Dato = dato; }
 }
+public class NodoArbol<T>
+{
+    public T Dato { get; set; }
+    public NodoArbol<T>? Izquierdo { get; set; }
+    public NodoArbol<T>? Derecho { get; set; }
+    public int Nivel { get; set; }
+    public int Columna { get; set; }
+    public NodoArbol(T dato) { Dato = dato; }
+}
